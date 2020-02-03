@@ -26,7 +26,7 @@
 
 #ifndef CHASE_POINTERS_HPP
 #define CHASE_POINTERS_HPP
-
+#include <cstdlib>
 /* follow a circular pointer chain a given number of times
    and return the real time used in seconds as double */
 double chase_pointers(void** memory, std::size_t count);

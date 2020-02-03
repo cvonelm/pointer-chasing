@@ -8,8 +8,8 @@ linear-chase-objects := linear-chase.o \
 random-chase-objects := random-chase.o \
 		chase-pointers.o
 
-CC := g++
-CPPFLAGS := -std=gnu++11 -Ifmt
+CC := clang
+CPPFLAGS := -Ifmt -pthread
 CXXFLAGS := $(CPPFLAGS) -g -O2
 Targets := fused-linear-chase linear-chase random-chase
 
@@ -27,7 +27,7 @@ fused-linear-chase:	$(fused-linear-chase-objects)
 linear-chase:	$(linear-chase-objects)
 		$(CXX) $(LDFLAGS) -o $@ $(linear-chase-objects)
 random-chase:	$(random-chase-objects)
-		$(CXX) $(LDFLAGS) -o $@ $(random-chase-objects)
+		$(CXX) -pthread $(LDFLAGS) -o $@ $(random-chase-objects)
 
 # DO NOT DELETE
 random-chase.o: random-chase.cpp fmt/printf.hpp chase-pointers.hpp \
