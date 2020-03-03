@@ -77,10 +77,10 @@ unsigned int log2(std::size_t val)
 }
 
 #ifndef MIN_SIZE
-#define MIN_SIZE 1024
+#define MIN_SIZE 1024 * 1024 * 1024
 #endif
 #ifndef MAX_SIZE
-#define MAX_SIZE 1024 * 1024 * 128
+#define MAX_SIZE 1024 * 1024 * 1024
 #endif
 #ifndef GRANULARITY
 #define GRANULARITY (1u)
