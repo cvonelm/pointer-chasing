@@ -33,6 +33,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <iostream>
+#include <vector>
 #include <printf.hpp> /* see https://github.com/afborchert/fmt */
 extern "C" {
     #include <sched.h>
@@ -77,10 +78,10 @@ unsigned int log2(std::size_t val)
 }
 
 #ifndef MIN_SIZE
-#define MIN_SIZE 1024 * 1024 * 1024
+#define MIN_SIZE 1024 * 1024
 #endif
 #ifndef MAX_SIZE
-#define MAX_SIZE 1024 * 1024 * 1024
+#define MAX_SIZE 1024 * 1024
 #endif
 #ifndef GRANULARITY
 #define GRANULARITY (1u)
@@ -100,8 +101,13 @@ void *routine(void *arg)
     *((double *)arg) = t * 1000000000 / count;
     return NULL;
 }
-int main()
+int main(int argc, char **argv)
 {
+    std::vector<int> cpus;
+    for(int i = 1; i < argc; i++)
+    {
+        cpus.push_back(atoi(argv[i]));
+    }
     std::vector<pthread_t> threads(NUM_CPUS);
     std::vector<double> times(NUM_CPUS);
     fmt::printf("   memsize  time in ns\n");
@@ -112,7 +118,7 @@ int main()
         count = std::max(memsize * 16, std::size_t { 1 } << 30);
         num_procs = NUM_CPUS;
         
-        for(std::size_t i = 0; i < NUM_CPUS; i++)
+        for(int i : cpus)
         {
             cpu_set_t t;
             pthread_attr_t attr;
